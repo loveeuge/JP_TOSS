@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>엔화 거래 계산기</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .title {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        .input-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            border: 2px solid #e9ecef;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #495057;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            align-items: center;
+        }
+
+        .input-group label {
+            min-width: 80px;
+            font-weight: 500;
+            color: #495057;
+        }
+
+        .input-group input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .spread-input {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .spread-input label {
+            font-weight: 500;
+            color: #495057;
+        }
+
+        .spread-input input {
+            width: 80px;
+            padding: 8px;
+            border: 2px solid #dee2e6;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .current-rate {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            border: 2px solid #90caf9;
+        }
+
+        .current-rate input {
+            width: 120px;
+            padding: 8px;
+            border: 2px solid #42a5f5;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .trade-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .trade-btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .buy-btn {
+            background: #28a745;
+            color: white;
+        }
+
+        .buy-btn:hover {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+
+        .sell-btn {
+            background: #dc3545;
+            color: white;
+        }
+
+        .sell-btn:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+        }
+
+        .history-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            border: 2px solid #e9ecef;
+        }
+
+        .history-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .history-item {
+            background: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .history-item.buy {
+            border-left: 4px solid #28a745;
+        }
+
+        .history-item.sell {
+            border-left: 4px solid #dc3545;
+        }
+
+        .trade-type.buy {
+            color: #28a745;
+        }
+
+        .trade-type.sell {
+            color: #dc3545;
+        }
+
+        .delete-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: background 0.3s ease;
+        }
+
+        .delete-btn:hover {
+            background: #c82333;
+        }
+
+        .input-group span {
+            color: #6c757d;
+            font-weight: 500;
+            margin-left: 10px;
+        }
+
+        .history-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .clear-btn {
+            background: #6c757d;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        .clear-btn:hover {
+            background: #5a6268;
+        }
+
+        .auto-calc {
+            font-size: 14px;
+            color: #6c757d;
+            margin-top: 10px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">🇯🇵 엔화 거래 계산기</h1>
+        
+        <div class="input-section">
+            <h3 class="section-title">거래 설정</h3>
+            
+            <div class="spread-input">
+                <label>스프레드:</label>
+                <input type="number" id="spread" value="2" min="1" max="10">
+                <span>원</span>
+            </div>
+            
+
+            
+            <div class="input-group">
+                <label>매도가:</label>
+                <input type="number" id="sellPrice" placeholder="942" step="1">
+                <span>이상</span>
+            </div>
+            
+            <div class="input-group">
+                <label>매수가:</label>
+                <input type="number" id="buyPrice" placeholder="940" step="1">
+                <span>미만</span>
+            </div>
+            
+            <div class="auto-calc">
+                💡 매수가 또는 매도가 중 하나만 입력하면 자동으로 계산됩니다
+            </div>
+            
+            <div class="trade-buttons">
+                <button class="trade-btn sell-btn" onclick="executeTrade('sell')">매도 실행</button>
+                <button class="trade-btn buy-btn" onclick="executeTrade('buy')">매수 실행</button>
+            </div>
+        </div>
+        
+        <div class="history-section">
+            <h3 class="section-title">거래 기록</h3>
+            <div id="historyList" class="history-list">
+                <div style="text-align: center; color: #6c757d; padding: 20px;">
+                    아직 거래 기록이 없습니다
+                </div>
+            </div>
+            <button class="clear-btn" onclick="clearAllHistory()">전체 기록 삭제</button>
+        </div>
+    </div>
+
+    <script>
+        let tradeHistory = JSON.parse(localStorage.getItem('tradeHistory') || '[]');
+        let previousBuyPrice = localStorage.getItem('previousBuyPrice') ? parseInt(localStorage.getItem('previousBuyPrice')) : null;
+        let previousSellPrice = localStorage.getItem('previousSellPrice') ? parseInt(localStorage.getItem('previousSellPrice')) : null;
+        
+        // 스프레드 값이 변경될 때 자동 계산
+        document.getElementById('spread').addEventListener('input', function() {
+            const buyPrice = document.getElementById('buyPrice').value;
+            const sellPrice = document.getElementById('sellPrice').value;
+            
+            if (buyPrice && !sellPrice) {
+                calculateFromBuy();
+            } else if (sellPrice && !buyPrice) {
+                calculateFromSell();
+            }
+        });
+        
+        // 매수가 입력 시 매도가 자동 계산
+        document.getElementById('buyPrice').addEventListener('input', function() {
+            if (this.value) {
+                calculateFromBuy();
+            }
+        });
+        
+        // 매도가 입력 시 매수가 자동 계산
+        document.getElementById('sellPrice').addEventListener('input', function() {
+            if (this.value) {
+                calculateFromSell();
+            }
+        });
+        
+        function calculateFromBuy() {
+            const buyPrice = parseInt(document.getElementById('buyPrice').value);
+            const spread = parseInt(document.getElementById('spread').value) || 2;
+            
+            if (!isNaN(buyPrice)) {
+                const sellPrice = buyPrice + spread;
+                document.getElementById('sellPrice').value = sellPrice;
+            }
+        }
+        
+        function calculateFromSell() {
+            const sellPrice = parseInt(document.getElementById('sellPrice').value);
+            const spread = parseInt(document.getElementById('spread').value) || 2;
+            
+            if (!isNaN(sellPrice)) {
+                const buyPrice = sellPrice - spread;
+                document.getElementById('buyPrice').value = buyPrice;
+            }
+        }
+        
+        function executeTrade(type) {
+            const buyPrice = document.getElementById('buyPrice').value;
+            const sellPrice = document.getElementById('sellPrice').value;
+            
+            if (!buyPrice || !sellPrice) {
+                alert('매수가와 매도가를 모두 입력해주세요!');
+                return;
+            }
+            
+            const currentBuyPrice = parseInt(buyPrice);
+            const currentSellPrice = parseInt(sellPrice);
+            
+            // 거래금액 계산
+            let tradeAmount = 0;
+            if (type === 'buy' && previousBuyPrice !== null) {
+                const priceDiff = Math.abs(previousBuyPrice - currentBuyPrice);
+                tradeAmount = priceDiff * 100; // 1원 차이당 100만원
+            } else if (type === 'sell' && previousSellPrice !== null) {
+                const priceDiff = Math.abs(previousSellPrice - currentSellPrice);
+                tradeAmount = priceDiff * 100; // 1원 차이당 100만원
+            }
+            
+            const now = new Date();
+            const trade = {
+                id: Date.now(),
+                type: type === 'buy' ? '매수' : '매도',
+                price: type === 'buy' ? currentBuyPrice : currentSellPrice,
+                amount: tradeAmount,
+                date: now.toLocaleDateString('ko-KR'),
+                time: now.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' })
+            };
+            
+            tradeHistory.unshift(trade);
+            
+            // 최근 20개만 보관
+            if (tradeHistory.length > 20) {
+                tradeHistory = tradeHistory.slice(0, 20);
+            }
+            
+            // 이전 가격 저장
+            previousBuyPrice = currentBuyPrice;
+            previousSellPrice = currentSellPrice;
+            localStorage.setItem('previousBuyPrice', previousBuyPrice);
+            localStorage.setItem('previousSellPrice', previousSellPrice);
+            localStorage.setItem('tradeHistory', JSON.stringify(tradeHistory));
+            
+            updateHistoryDisplay();
+        }
+        
+        function updateHistoryDisplay() {
+            const historyList = document.getElementById('historyList');
+            
+            if (tradeHistory.length === 0) {
+                historyList.innerHTML = '<div style="text-align: center; color: #6c757d; padding: 20px;">아직 거래 기록이 없습니다</div>';
+                return;
+            }
+            
+            historyList.innerHTML = tradeHistory.map(trade => {
+                return `
+                    <div class="history-item ${trade.type === '매수' ? 'buy' : 'sell'}">
+                        <div>
+                            <strong class="trade-type ${trade.type === '매수' ? 'buy' : 'sell'}">${trade.type}</strong> @ ${trade.price}원
+                            <br>
+                            <small>거래금액: ${trade.amount}만원</small>
+                            <br>
+                            <small style="color: #6c757d;">${trade.date} ${trade.time}</small>
+                        </div>
+                        <button class="delete-btn" onclick="deleteHistoryItem(${trade.id})">삭제</button>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function deleteHistoryItem(id) {
+            tradeHistory = tradeHistory.filter(trade => trade.id !== id);
+            localStorage.setItem('tradeHistory', JSON.stringify(tradeHistory));
+            updateHistoryDisplay();
+        }
+        
+        function clearAllHistory() {
+            if (confirm('모든 거래 기록을 삭제하시겠습니까?')) {
+                tradeHistory = [];
+                localStorage.removeItem('tradeHistory');
+                localStorage.removeItem('previousBuyPrice');
+                localStorage.removeItem('previousSellPrice');
+                previousBuyPrice = null;
+                previousSellPrice = null;
+                updateHistoryDisplay();
+            }
+        }
+        
+        // 페이지 로드 시 기록 표시
+        updateHistoryDisplay();
+        
+        // 마지막 거래 정보가 있으면 자동으로 입력
+        if (tradeHistory.length > 0) {
+            const lastTrade = tradeHistory[0];
+            if (lastTrade.buyPrice && lastTrade.sellPrice) {
+                // 이전 버전 호환성
+                document.getElementById('buyPrice').value = lastTrade.buyPrice;
+                document.getElementById('sellPrice').value = lastTrade.sellPrice;
+            }
+        }
+    </script>
+</body>
+</html>
