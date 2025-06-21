@@ -15,112 +15,108 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            padding: 20px;
+            padding: 10px;
         }
 
         .container {
-            max-width: 600px;
+            max-width: 100%;
             margin: 0 auto;
             background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
         .title {
             text-align: center;
             color: #333;
-            margin-bottom: 30px;
-            font-size: 28px;
+            margin-bottom: 25px;
+            font-size: 22px;
             font-weight: 600;
         }
 
         .input-section {
             background: #f8f9fa;
-            padding: 25px;
-            border-radius: 15px;
-            margin-bottom: 25px;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
             border: 2px solid #e9ecef;
         }
 
         .section-title {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            color: #495057;
-        }
-
-        .input-group {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 15px;
-            align-items: center;
-        }
-
-        .input-group label {
-            min-width: 80px;
-            font-weight: 500;
-            color: #495057;
-        }
-
-        .input-group input {
-            flex: 1;
-            padding: 12px;
-            border: 2px solid #dee2e6;
-            border-radius: 8px;
             font-size: 16px;
-            transition: all 0.3s ease;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #495057;
         }
 
-        .input-group input:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        .spread-input {
+        .spread-row {
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
-        .spread-input label {
+        .spread-row label {
             font-weight: 500;
             color: #495057;
         }
 
-        .spread-input input {
-            width: 80px;
+        .spread-row input {
+            width: 60px;
             padding: 8px;
             border: 2px solid #dee2e6;
             border-radius: 6px;
             text-align: center;
+            font-size: 14px;
         }
 
-        .current-rate {
-            background: #e3f2fd;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            text-align: center;
-            border: 2px solid #90caf9;
+        .input-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            gap: 10px;
         }
 
-        .current-rate input {
-            width: 120px;
-            padding: 8px;
-            border: 2px solid #42a5f5;
-            border-radius: 6px;
+        .input-row label {
+            width: 60px;
+            font-weight: 500;
+            color: #495057;
+            font-size: 14px;
+        }
+
+        .input-row input {
+            width: 80px;
+            padding: 10px 8px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 16px;
             text-align: center;
-            font-size: 18px;
-            font-weight: 600;
+        }
+
+        .input-row input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.1);
+        }
+
+        .input-row span {
+            color: #6c757d;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .auto-calc {
+            font-size: 13px;
+            color: #6c757d;
+            margin-top: 10px;
+            font-style: italic;
+            text-align: center;
         }
 
         .trade-buttons {
             display: flex;
-            gap: 15px;
+            gap: 10px;
             margin-top: 20px;
         }
 
@@ -142,7 +138,7 @@
 
         .buy-btn:hover {
             background: #218838;
-            transform: translateY(-2px);
+            transform: translateY(-1px);
         }
 
         .sell-btn {
@@ -152,13 +148,13 @@
 
         .sell-btn:hover {
             background: #c82333;
-            transform: translateY(-2px);
+            transform: translateY(-1px);
         }
 
         .history-section {
             background: #f8f9fa;
-            padding: 25px;
-            border-radius: 15px;
+            padding: 20px;
+            border-radius: 12px;
             border: 2px solid #e9ecef;
         }
 
@@ -169,12 +165,13 @@
 
         .history-item {
             background: white;
-            padding: 15px;
-            margin-bottom: 10px;
+            padding: 12px;
+            margin-bottom: 8px;
             border-radius: 8px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            font-size: 14px;
         }
 
         .history-item.buy {
@@ -187,56 +184,49 @@
 
         .trade-type.buy {
             color: #28a745;
+            font-weight: 600;
         }
 
         .trade-type.sell {
             color: #dc3545;
+            font-weight: 600;
         }
 
         .delete-btn {
             background: #dc3545;
             color: white;
             border: none;
-            padding: 5px 10px;
+            padding: 4px 8px;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 12px;
-            transition: background 0.3s ease;
+            font-size: 11px;
         }
 
         .delete-btn:hover {
             background: #c82333;
         }
 
-        .input-group span {
-            color: #6c757d;
-            font-weight: 500;
-            margin-left: 10px;
-        }
-
-        .history-item:last-child {
-            margin-bottom: 0;
-        }
-
         .clear-btn {
             background: #6c757d;
             color: white;
-            padding: 10px 20px;
+            padding: 10px 15px;
             border: none;
             border-radius: 6px;
             cursor: pointer;
             margin-top: 15px;
+            font-size: 14px;
+            width: 100%;
         }
 
         .clear-btn:hover {
             background: #5a6268;
         }
 
-        .auto-calc {
-            font-size: 14px;
+        .empty-history {
+            text-align: center;
             color: #6c757d;
-            margin-top: 10px;
-            font-style: italic;
+            padding: 20px;
+            font-size: 14px;
         }
     </style>
 </head>
@@ -247,21 +237,19 @@
         <div class="input-section">
             <h3 class="section-title">거래 설정</h3>
             
-            <div class="spread-input">
+            <div class="spread-row">
                 <label>스프레드:</label>
                 <input type="number" id="spread" value="2" min="1" max="10">
                 <span>원</span>
             </div>
             
-
-            
-            <div class="input-group">
+            <div class="input-row">
                 <label>매도가:</label>
                 <input type="number" id="sellPrice" placeholder="942" step="1">
                 <span>이상</span>
             </div>
             
-            <div class="input-group">
+            <div class="input-row">
                 <label>매수가:</label>
                 <input type="number" id="buyPrice" placeholder="940" step="1">
                 <span>미만</span>
@@ -280,7 +268,7 @@
         <div class="history-section">
             <h3 class="section-title">거래 기록</h3>
             <div id="historyList" class="history-list">
-                <div style="text-align: center; color: #6c757d; padding: 20px;">
+                <div class="empty-history">
                     아직 거래 기록이 없습니다
                 </div>
             </div>
@@ -392,7 +380,7 @@
             const historyList = document.getElementById('historyList');
             
             if (tradeHistory.length === 0) {
-                historyList.innerHTML = '<div style="text-align: center; color: #6c757d; padding: 20px;">아직 거래 기록이 없습니다</div>';
+                historyList.innerHTML = '<div class="empty-history">아직 거래 기록이 없습니다</div>';
                 return;
             }
             
@@ -400,11 +388,10 @@
                 return `
                     <div class="history-item ${trade.type === '매수' ? 'buy' : 'sell'}">
                         <div>
-                            <strong class="trade-type ${trade.type === '매수' ? 'buy' : 'sell'}">${trade.type}</strong> @ ${trade.price}원
-                            <br>
-                            <small>거래금액: ${trade.amount}만원</small>
-                            <br>
-                            <small style="color: #6c757d;">${trade.date} ${trade.time}</small>
+                            <div class="trade-type ${trade.type === '매수' ? 'buy' : 'sell'}">${trade.type} @ ${trade.price}원</div>
+                            <div style="font-size: 12px; color: #6c757d;">
+                                거래금액: ${trade.amount}만원 | ${trade.date} ${trade.time}
+                            </div>
                         </div>
                         <button class="delete-btn" onclick="deleteHistoryItem(${trade.id})">삭제</button>
                     </div>
